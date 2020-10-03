@@ -17,6 +17,8 @@ let lineLength = 3;
 let segWidth = 10;
 let setHeight = 10;
 
+let ax, ay;
+
 function init() {
   canvas = document.getElementById("game");
   context = canvas.getContext("2d");
@@ -32,6 +34,9 @@ function init() {
   for (let i = lineLength - 1; i >= 0; i--) {
     line.push({ x: px - i, y: py });
   }
+
+  ax = Math.floor(Math.random() * gameWidth);
+  ay = Math.floor(Math.random() * gameHeight);
 
   setInterval(gameLoop, 1000 / 5);
 }
@@ -53,11 +58,31 @@ function gameLoop() {
     py = 0;
   }
 
+  if (px == ax && py == ay) {
+    lineLength++;
+    ax = Math.floor(Math.random() * gameWidth);
+    ay = Math.floor(Math.random() * gameHeight);
+  }
+
   line.push({ x: px, y: py });
   line = line.slice(line.length - lineLength);
 
+  if (checkCollision(line.slice(0, line.length - 1), px, py)) {
+    lineLength = 3;
+    return;
+  }
+
+  // draw game
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.fillStyle = "red";
+  context.fillRect(
+    ax * segWidth + 1,
+    ay * segHeight + 1,
+    segWidth - 1,
+    segHeight - 1
+  );
 
   context.fillStyle = "lime";
   line.forEach((point) => {
@@ -91,4 +116,15 @@ function onKeyDown(event) {
     default:
     // do nothing
   }
+}
+
+function checkCollision(line, px, py) {
+  for (let i = 0; i < line.length - 1; i++) {
+    let point = line[i];
+    if (point.x == px && point.y == py) {
+      return true;
+    }
+  }
+
+  return false;
 }
