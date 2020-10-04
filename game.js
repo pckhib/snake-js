@@ -1,13 +1,15 @@
 window.onload = () => init();
 
+let gameInterval;
+
 let canvas;
 let context;
 
 let vx = 1;
 let vy = 0;
 
-const gameWidth = 20;
-const gameHeight = 20;
+let gameWidth = 20;
+let gameHeight = 20;
 
 let px, py;
 
@@ -38,7 +40,7 @@ function init() {
   ax = Math.floor(Math.random() * gameWidth);
   ay = Math.floor(Math.random() * gameHeight);
 
-  setInterval(gameLoop, 1000 / 5);
+  gameInterval = setInterval(gameLoop, 1000 / 5);
 }
 
 function gameLoop() {
@@ -127,4 +129,27 @@ function checkCollision(line, px, py) {
   }
 
   return false;
+}
+
+function changeWidth(value) {
+  gameWidth = value;
+  segWidth = canvas.width / gameWidth;
+
+  ax = Math.floor(Math.random() * gameWidth);
+  ay = Math.floor(Math.random() * gameHeight);
+}
+
+function changeHeight(value) {
+  gameHeight = value;
+  segHeight = canvas.height / gameHeight;
+
+  ax = Math.floor(Math.random() * gameWidth);
+  ay = Math.floor(Math.random() * gameHeight);
+}
+
+function changeSpeed(value) {
+  if (gameInterval != undefined) {
+    clearInterval(gameInterval);
+  }
+  gameInterval = setInterval(gameLoop, 1000 / value);
 }

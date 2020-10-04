@@ -8,5 +8,36 @@
   </head>
   <body>
     <canvas id="game" width="400" height="400"></canvas>
+    <div>
+      <label for="width">Width</label>
+      <input
+        onchange="changeWidth(this.value)"
+        id="width"
+        value="20"
+        min="4"
+        max="100"
+        type="number"
+      />
+      <label for="height">Height</label>
+      <input
+        onchange="changeHeight(this.value)"
+        id="height"
+        value="20"
+        min="4"
+        max="100"
+        type="number"
+      />
+    </div>
+    <div>
+      <label for="speed">Speed</label>
+      <input
+        onchange="changeSpeed(this.value)"
+        id="speed"
+        value="5"
+        min="1"
+        max="20"
+        type="number"
+      />
+    </div>
   </body>
 </html>
